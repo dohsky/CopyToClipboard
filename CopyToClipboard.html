@@ -1,0 +1,149 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COPY things</title>
+    <style>
+      html { font-size: 200%; }
+      body { background-color: powderblue; 
+             font-size: 18px;
+             line-height: 1.6;
+             font-family: Arial, sans-serif; }
+      input, textarea, select, button {
+        font-size: 20px;
+        padding: 10px;
+        margin: 5px 0;
+        width: 100%;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <center>
+      <table border="1" width="90%">
+        <tr>
+          <td>
+            <button onclick="Copy('copy_text01')" title="Select All & Copy to Clipboard">Copy</button>
+            <input type="text" class="copy_text01" value="" >
+          </td>
+          <td>
+            <button onclick="Copy('copy_text02')" title="Select All & Copy to Clipboard">Copy</button>
+            <input type="text" class="copy_text02" value="" >
+          </td>
+          <td>
+            <button onclick="Copy('copy_text03')" title="Select All & Copy to Clipboard">Copy</button>
+            <input type="text" class="copy_text03" value="" >
+          </td>
+        </tr>
+
+        <tr style="background: purple;">
+          <td colspan="3">&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td>
+            <button onclick="Copy('copy_text04')" title="Select All & Copy to Clipboard">Copy</button>
+            <textarea class="copy_text04" rows="8" ></textarea>
+          </td>
+          <td>
+            <button onclick="Copy('copy_text05')" title="Select All & Copy to Clipboard">Copy</button>
+            <textarea class="copy_text05" rows="8" ></textarea>
+          </td>
+          <td>
+            <button onclick="Copy('copy_text06')" title="Select All & Copy to Clipboard">Copy</button>
+            <textarea class="copy_text06" rows="8" ></textarea>
+          </td>
+        </tr>
+
+        <tr style="background: purple;">
+          <td colspan="3">&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td>
+            <button onclick="Copy('copy_text07')" title="Select All & Copy to Clipboard">Copy</button>
+            <input type="text" class="copy_text07" value="" >
+          </td>
+          <td>
+            <button onclick="Copy('copy_text08')" title="Select All & Copy to Clipboard">Copy</button>
+            <input type="text" class="copy_text08" value="" >
+          </td>
+          <td>
+            <button onclick="Copy('copy_text09')" title="Select All & Copy to Clipboard">Copy</button>
+            <input type="text" class="copy_text09" value="" >
+          </td>
+        </tr>
+		
+        <tr style="background: purple;">
+          <td colspan="3">&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td>
+            <button onclick="Copy('copy_text10')" title="Select All & Copy to Clipboard">Copy</button>
+            <input type="text" class="copy_text10" value="" >
+          </td>
+          <td>
+            <button onclick="Copy('copy_text11')" title="Select All & Copy to Clipboard">Copy</button>
+            <input type="text" class="copy_text11" value="" >
+          </td>
+          <td>
+            <button onclick="Copy('copy_text12')" title="Select All & Copy to Clipboard">Copy</button>
+            <input type="text" class="copy_text12" value="" >
+          </td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td><input id="Loader" type="button" value="Load" onclick="LoadAll();"></td>
+          <td><input id="Saver" type="button" value="Save" onclick="SaveAll();"></td>
+		         <td><input id="AutoSaveCheckbox" type="checkbox" CHECKED> Auto Save</td>
+        </tr>
+      </table>
+
+      <script>          
+		const copyTexts = [
+            'copy_text01', 'copy_text02', 'copy_text03',
+            'copy_text04', 'copy_text05', 'copy_text06',
+            'copy_text07', 'copy_text08', 'copy_text09',
+            'copy_text10', 'copy_text11', 'copy_text12'
+          ];
+        function Copy(id) {
+          const copyText = document.querySelector(`.${id}`);
+          
+            copyText.select();
+            document.execCommand("copy");
+        }
+
+        function SaveAll() {
+          for (let i = 1; i <= copyTexts.length; i++) {
+		      localStorage.setItem(`Copy${i}`, document.querySelector(`.${copyTexts[i-1]}`).value);
+          }
+        }
+
+        function LoadAll() {
+          for (let i = 1; i <= copyTexts.length; i++) {
+            const textArea = document.querySelector(`.${copyTexts[i-1]}`);
+            if (textArea) {
+              textArea.value = localStorage.getItem(`Copy${i}`) || '';
+            }
+          }
+        }
+
+            function autoSave() {
+                if (document.getElementById('AutoSaveCheckbox').checked) {
+                    SaveAll();
+                }
+            }
+
+           for (let i = 1; i <= copyTexts.length; i++)  {
+                document.querySelector(`.${copyTexts[i-1]}`).addEventListener('input', autoSave);
+            };
+
+            LoadAll();
+        </script>
+    </center>
+  </body>
+</html>
